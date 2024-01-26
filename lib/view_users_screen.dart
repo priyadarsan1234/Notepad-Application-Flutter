@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_2/EditScreen.dart';
 import 'package:flutter_application_2/add_user_screen.dart';
 import 'package:flutter_application_2/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,7 @@ class Viewdata extends StatefulWidget {
 
 class _ViewdataState extends State<Viewdata> {
   late Future<String?> email;
-  late CollectionReference? users; // Make it nullable
+  late CollectionReference? users; 
 
   @override
   void initState() {
@@ -152,7 +153,7 @@ class _ViewdataState extends State<Viewdata> {
                                         builder: (context) => UserDetailsScreen(
                                           name: data['name'],
                                           description: data['description'],
-                                          documentId: documentId, // Pass documentId
+                                          documentId: documentId,
                                         ),
                                       ),
                                     );
@@ -223,115 +224,6 @@ class _ViewdataState extends State<Viewdata> {
         },
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class UserDetailsScreen extends StatefulWidget {
-  final String name;
-  final String description;
-  final String documentId;
-
-  UserDetailsScreen({
-    required this.name,
-    required this.description,
-    required this.documentId,
-  });
-
-  @override
-  _UserDetailsScreenState createState() => _UserDetailsScreenState();
-}
-
-class _UserDetailsScreenState extends State<UserDetailsScreen> {
-  late TextEditingController _nameController;
-  late TextEditingController _descriptionController;
-  late CollectionReference users;
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _descriptionController = TextEditingController(text: widget.description);
-    _initializeUsersCollection();
-  }
-
-  void _initializeUsersCollection() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? mail = prefs.getString('email');
-    users = FirebaseFirestore.instance.collection('users${mail ?? ""}');
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  void _updateUserDetails() async {
-    try {
-      String updatedName = _nameController.text;
-      String updatedDescription = _descriptionController.text;
-
-      await users.doc(widget.documentId).update({
-        'name': updatedName,
-        'description': updatedDescription,
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('User details updated successfully'),
-        ),
-      );
-    } catch (e) {
-      print('Error updating user details: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error updating user details. Please try again.'),
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Details'),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 10),
-            TextFormField(
-              maxLines: 5,
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _updateUserDetails();
-              },
-              child: Text('Update'),
-            ),
-          ],
-        ),
       ),
     );
   }

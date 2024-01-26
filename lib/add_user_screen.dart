@@ -26,7 +26,8 @@ class _AddState extends State<ADDING> {
       await users.add({
         'name': name,
         'description': description,
-        'email':mail // Add the new "description" field to Firestore
+        'email':mail ,
+        'timestamp': FieldValue.serverTimestamp(),
       });
 
       // Show a success message
