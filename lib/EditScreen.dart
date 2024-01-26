@@ -59,6 +59,7 @@ class _EditState extends State<Edit> {
           content: Text('User details updated successfully'),
         ),
       );
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -79,13 +80,13 @@ class _EditState extends State<Edit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Details'),
+        title: Text('Edit User'),
         backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
               'Name',
@@ -131,7 +132,7 @@ class _EditState extends State<Edit> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.blueAccent,
                 onPrimary: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                padding: EdgeInsets.symmetric(vertical: 15),
               ),
               child: Text(
                 'Update',

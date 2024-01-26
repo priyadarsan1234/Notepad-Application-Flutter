@@ -55,29 +55,43 @@ class SignUpScreen extends StatelessWidget {
                 obscureText: true,
               ),
               SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("Password Contain ( A,a,1,@ )"),
+                ],
+              ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
                   String email = emailController.text.trim();
                   String password = passwordController.text.trim();
-                  User? user =
+
+                  if(email.isEmpty && email==""){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Email Empty'),
+                    ));
+                  } else if(password.isEmpty && password==""){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Password Empty'),));
+                  }
+                  else{
+                    User? user =
                       await _auth.signUpWithEmailAndPassword(email, password);
                   if (user != null) {
-
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => LoginScreen()));
-                  
-                    
-
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Signup successful: ${user.uid}'),
+                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Signup successfully: ${user.uid}'),
                     ));
                     
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('Sign Up Failed'),
                     ));
+                  }
                   }
                 },
                 child: Text('Login'),

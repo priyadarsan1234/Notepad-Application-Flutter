@@ -45,6 +45,7 @@ class _ViewdataState extends State<Viewdata> {
 
   Future<void> _deleteUser(String documentId) async {
     await users!.doc(documentId).delete();
+    
   }
 
   Future<void> clearSharedPreferences() async {
