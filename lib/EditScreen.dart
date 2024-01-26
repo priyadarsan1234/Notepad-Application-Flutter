@@ -60,7 +60,7 @@ class _EditState extends State<Edit> {
         ),
       );
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => Viewdata(),
@@ -80,10 +80,11 @@ class _EditState extends State<Edit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit User'),
+        title: Text('My Notepad'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+        child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -101,7 +102,7 @@ class _EditState extends State<Edit> {
               controller: _nameController,
               style: TextStyle(fontSize: 16),
               decoration: InputDecoration(
-                labelText: 'Enter name',
+                labelText: 'Enter New Name',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -116,11 +117,11 @@ class _EditState extends State<Edit> {
             ),
             SizedBox(height: 8),
             TextFormField(
-              maxLines: 5,
+              maxLines: 10,
               controller: _descriptionController,
               style: TextStyle(fontSize: 16),
               decoration: InputDecoration(
-                labelText: 'Enter description',
+                labelText: 'Enter New Description',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -142,6 +143,7 @@ class _EditState extends State<Edit> {
           ],
         ),
       ),
+      )
     );
   }
 }

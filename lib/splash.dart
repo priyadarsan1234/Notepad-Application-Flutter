@@ -23,7 +23,7 @@ class Splash_screenState extends State<Splash_screen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
 
-    Timer(const Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -57,14 +57,14 @@ class Splash_screenState extends State<Splash_screen> {
                 children: [
                   const SizedBox(height: 150),
                   FadeInUp(
-                            duration: Duration(seconds: 1),
+                            duration: Duration(seconds: 2),
                             child:  Image.asset(
                     'assets/logo.png',
                     height: 180,
                   ),),
                    SizedBox(height: 210),
                    FadeInDownBig(
-                            duration: Duration(seconds: 1),
+                            duration: Duration(seconds: 2),
                             child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

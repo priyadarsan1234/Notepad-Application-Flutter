@@ -26,7 +26,7 @@ class _AddState extends State<ADDING> {
       await users.add({
         'name': name,
         'description': description,
-        'email':mail ,
+        'email': mail,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
@@ -44,62 +44,105 @@ class _AddState extends State<ADDING> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Firestore Upload'),
+        title: Text('My Notepad'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Card(
-          elevation: 5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Add New Data',
-                  style: TextStyle(
-                    fontSize: 24.0,
+      body: SingleChildScrollView(
+        child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Add New Data',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                ),
+              ),
+              SizedBox(height: 16.0),
+              TextFormField(
+                maxLines: 10,
+                controller: _descriptionController,
+                decoration: InputDecoration(
+                  labelStyle: TextStyle(
+                    fontSize: 18.0,
                     fontWeight: FontWeight.bold,
+                    color: Colors.blue,
                   ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _nameController,
-                  decoration: InputDecoration(
-                    labelText: 'Name',
-                    border: OutlineInputBorder(),
+                  hintText: 'Enter a description...',
+                  border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
-                ),
-                SizedBox(height: 16.0),
-                TextField(
-                  controller: _descriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Description',
-                    border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue, width: 2.0),
                   ),
+                  fillColor: Colors.grey[200], // Background color
+                  filled: true,
                 ),
-                SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: _uploadData,
-                  child: Text('Upload Data'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
-                    onPrimary: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black87,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    children: [
+                      ElevatedButton(
+                    onPressed: _uploadData,
+                    child: Text(' Add Data '),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 16.0),
-              ],
-            ),
+                  ElevatedButton(
+                    onPressed: (){
+                      _descriptionController.text='';
+                      _nameController.text='';
+                    },
+                    child: Text('Clear Data'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                    ],
+                  )
+                ],
+              ),
+              SizedBox(height: 16.0),
+            ],
           ),
         ),
       ),
+      )
     );
+    // );
   }
 }

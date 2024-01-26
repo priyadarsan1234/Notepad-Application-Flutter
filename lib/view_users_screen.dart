@@ -13,6 +13,8 @@ class Viewdata extends StatefulWidget {
 class _ViewdataState extends State<Viewdata> {
   late Future<String?> email;
   late CollectionReference? users;
+  TextEditingController searchController = TextEditingController();
+  bool isSearching = false;
 
   @override
   void initState() {
@@ -61,29 +63,31 @@ class _ViewdataState extends State<Viewdata> {
     );
   }
 
+  void _startSearch() {
+    setState(() {
+      isSearching = true;
+    });
+  }
+
+  void _stopSearch() {
+    setState(() {
+      isSearching = false;
+      searchController.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Notepad'),
-        backgroundColor: Colors.blue,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              clearSharedPreferences();
-            },
-          ),
-        ],
-      ),
+      appBar: isSearching ? _buildSearchAppBar() : _buildNormalAppBar(),
       body: Column(
         children: [
           const Padding(
-            padding: EdgeInsets.only(top:8.0),
+            padding: EdgeInsets.only(top: 8.0),
             child: Text(
-              "ClickAbove To View Full Or Update Record",
+              "Click Above Card To View Full Or Update Record",
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 12,
                 color: Colors.redAccent,
               ),
             ),
@@ -124,8 +128,15 @@ class _ViewdataState extends State<Viewdata> {
                                 );
                               } else {
                                 return ListView(
-                                  children: snapshot.data!.docs
-                                      .map((DocumentSnapshot document) {
+                                  children:
+                                      snapshot.data!.docs.where((document) {
+                                    Map<String, dynamic> data =
+                                        document.data() as Map<String, dynamic>;
+                                    String name = data['name'].toLowerCase();
+                                    String query =
+                                        searchController.text.toLowerCase();
+                                    return name.contains(query);
+                                  }).map((DocumentSnapshot document) {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
                                     String documentId = document.id;
@@ -137,13 +148,16 @@ class _ViewdataState extends State<Viewdata> {
                                         vertical: 8,
                                       ),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.0),
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
                                       ),
                                       child: ListTile(
-                                        contentPadding: const EdgeInsets.all(16),
+                                        contentPadding:
+                                            const EdgeInsets.all(16),
                                         tileColor: Colors.white,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(15.0),
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
                                         ),
                                         title: Text(
                                           data['name'],
@@ -168,7 +182,8 @@ class _ViewdataState extends State<Viewdata> {
                                             MaterialPageRoute(
                                               builder: (context) => Edit(
                                                 name: data['name'],
-                                                description: data['description'],
+                                                description:
+                                                    data['description'],
                                                 documentId: documentId,
                                               ),
                                             ),
@@ -182,30 +197,35 @@ class _ViewdataState extends State<Viewdata> {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title: const Text('Delete User'),
+                                                  title:
+                                                      const Text('Delete Note'),
                                                   content: const Text(
-                                                      'Are you sure you want to delete this user?'),
+                                                      'Are you sure you want to delete this Note?'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
-                                                      child: const Text('Cancel'),
+                                                      child:
+                                                          const Text('Cancel'),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
                                                         _deleteUser(documentId)
                                                             .then((value) {
-                                                          ScaffoldMessenger.of(context)
+                                                          ScaffoldMessenger.of(
+                                                                  context)
                                                               .showSnackBar(
-                                                                const SnackBar(
-                                                                  content: Text(
-                                                                      'User deleted successfully'),
-                                                                ),
-                                                              );
+                                                            const SnackBar(
+                                                              content: Text(
+                                                                  'User deleted successfully'),
+                                                            ),
+                                                          );
                                                           setState(() {});
                                                         });
-                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context)
+                                                            .pop();
                                                       },
                                                       child: const Text(
                                                         'Delete',
@@ -245,6 +265,88 @@ class _ViewdataState extends State<Viewdata> {
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
       ),
+    );
+  }
+
+  AppBar _buildNormalAppBar() {
+    return AppBar(
+      title: const Text('My Notepad'),
+      backgroundColor: Colors.blue,
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.search,
+            color: Colors.black,
+          ),
+          onPressed: _startSearch,
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.logout,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Logout'),
+                  content:
+                      const Text('Are you sure you want to Logout?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        clearSharedPreferences();
+                      },
+                      child: const Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  AppBar _buildSearchAppBar() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: _stopSearch,
+      ),
+      title: TextField(
+        controller: searchController,
+        decoration: InputDecoration(
+          hintText: 'Search by Name',
+          border: InputBorder.none,
+        ),
+        onChanged: (value) {
+          setState(
+              () {}); // Trigger a rebuild when the user types in the search bar
+        },
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.clear),
+          onPressed: () {
+            searchController.clear();
+          },
+        ),
+      ],
     );
   }
 }
