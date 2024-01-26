@@ -150,7 +150,7 @@ class _ViewdataState extends State<Viewdata> {
                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => UserDetailsScreen(
+                                        builder: (context) => Edit(
                                           name: data['name'],
                                           description: data['description'],
                                           documentId: documentId,

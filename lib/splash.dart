@@ -8,10 +8,10 @@ class Splash_screen extends StatefulWidget {
   const Splash_screen({Key? key});
 
   @override
-  State<Splash_screen> createState() => _Mob_Splash_screenState();
+  State<Splash_screen> createState() => Splash_screenState();
 }
 
-class _Mob_Splash_screenState extends State<Splash_screen> {
+class Splash_screenState extends State<Splash_screen> {
   @override
   void initState() {
     super.initState();
@@ -35,7 +35,7 @@ class _Mob_Splash_screenState extends State<Splash_screen> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  LoginScreen()), // Navigate to your login screen
+                  LoginScreen()), 
         );
       }
     });

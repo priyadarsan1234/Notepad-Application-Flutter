@@ -3,22 +3,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserDetailsScreen extends StatefulWidget {
+class Edit extends StatefulWidget {
   final String name;
   final String description;
   final String documentId;
 
-  UserDetailsScreen({
+  Edit({
     required this.name,
     required this.description,
     required this.documentId,
   });
 
   @override
-  _UserDetailsScreenState createState() => _UserDetailsScreenState();
+  _EditState createState() => _EditState();
 }
 
-class _UserDetailsScreenState extends State<UserDetailsScreen> {
+class _EditState extends State<Edit> {
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
   late CollectionReference users;
