@@ -62,6 +62,7 @@ class _AddState extends State<ADDING> {
                     'Add New Data',
                     style: TextStyle(
                       fontFamily: 'serif',
+                      color: Colors.blue,
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),

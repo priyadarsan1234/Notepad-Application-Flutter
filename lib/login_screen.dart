@@ -128,7 +128,7 @@ class LoginScreen extends StatelessWidget {
                                     .showSnackBar(const SnackBar(
                                   content: Text('Login Successfully'),
                                 ));
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => Viewdata()),
