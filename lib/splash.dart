@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/login_screen.dart';
 import 'package:flutter_application_2/view_users_screen.dart';
@@ -52,15 +53,19 @@ class Splash_screenState extends State<Splash_screen> {
             height: constraints.maxHeight,
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(height: 150),
-                  Image.asset(
+                  FadeInUp(
+                            duration: Duration(seconds: 1),
+                            child:  Image.asset(
                     'assets/logo.png',
                     height: 180,
-                  ),
-                  const SizedBox(height: 210),
-                  Row(
+                  ),),
+                   SizedBox(height: 210),
+                   FadeInDownBig(
+                            duration: Duration(seconds: 1),
+                            child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
@@ -73,7 +78,7 @@ class Splash_screenState extends State<Splash_screen> {
                         width: 30,
                       ),
                     ],
-                  ),
+                  ),)
                 ],
               ),
             ),

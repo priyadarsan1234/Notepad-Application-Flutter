@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/login_screen.dart';
@@ -12,7 +13,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -24,55 +25,71 @@ class SignUpScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/logo.png', // Replace with your app's logo
-                height: 100,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Sign UP',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
+             FadeInUp(
+                duration: const Duration(seconds: 2),
+                child: Image.asset(
+                  'assets/logo.png',
+                  height: 100,
                 ),
               ),
-              SizedBox(height: 10),
-              TextField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  icon: Icon(Icons.email, color: Colors.blueAccent),
+              const SizedBox(height: 10),
+              FadeInUp(
+                    duration: const Duration(seconds: 2),
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      ),
+                    )),
+              const SizedBox(height: 10),
+              FadeInUp(
+                duration: const Duration(seconds: 2),
+                child: TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    icon: Icon(Icons.email, color: Colors.blueAccent),
+                  ),
                 ),
               ),
-              SizedBox(height: 10),
-              TextField(
-                controller: passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  icon: Icon(Icons.lock, color: Colors.blueAccent),
+              const SizedBox(height: 5),
+              FadeInUp(
+                duration: const Duration(seconds: 2),
+                child: TextField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                    labelText: 'Password',
+                    icon: Icon(Icons.lock, color: Colors.blueAccent),
+                  ),
+                  obscureText: true,
                 ),
-                obscureText: true,
               ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text("Password Contain ( A,a,1,@ )"),
-                ],
+              const SizedBox(height: 10),
+              FadeInUp(
+                duration: const Duration(seconds: 2),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text("Password Contain ( A,a,1,@ )"),
+                  ],
+                ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
+              const SizedBox(height: 10),
+               FadeInUp(
+                            duration: const Duration(seconds: 2),
+                            child:  ElevatedButton(
                 onPressed: () async {
                   String email = emailController.text.trim();
                   String password = passwordController.text.trim();
 
                   if(email.isEmpty && email==""){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Email Empty'),
                     ));
                   } else if(password.isEmpty && password==""){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Password Empty'),));
                   }
                   else{
@@ -88,22 +105,22 @@ class SignUpScreen extends StatelessWidget {
                     ));
                     
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Sign Up Failed'),
                     ));
                   }
                   }
                 },
-                child: Text('Login'),
+                child: const Text('Login'),
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blueAccent,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-              ),
-              SizedBox(
+              ),),
+              const SizedBox(
                 height: 15,
               ),
               GestureDetector(
@@ -113,7 +130,9 @@ class SignUpScreen extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => LoginScreen()));
                   },
-                  child: Row(
+                  child:  FadeInUp(
+                            duration: const Duration(seconds: 2),
+                            child:  const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Already have an account?'),
@@ -126,7 +145,7 @@ class SignUpScreen extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )),
+                  ),)),
             ],
           ),
         ),
