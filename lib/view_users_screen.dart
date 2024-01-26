@@ -5,7 +5,6 @@ import 'package:flutter_application_2/Add.dart';
 import 'package:flutter_application_2/login_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class Viewdata extends StatefulWidget {
   @override
   _ViewdataState createState() => _ViewdataState();
@@ -69,7 +68,6 @@ class _ViewdataState extends State<Viewdata> {
       isSearching = true;
     });
   }
-
   void _stopSearch() {
     setState(() {
       isSearching = false;
@@ -143,11 +141,13 @@ class _ViewdataState extends State<Viewdata> {
                                         document.data() as Map<String, dynamic>;
                                     String documentId = document.id;
                                     dynamic timestampValue = data['timestamp'];
-                                      DateTime dateTime = timestampValue.toDate();
-                                      DateTime dateOnly = DateTime(dateTime.year, dateTime.month, dateTime.day);
-                                      String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-                                      String formattedTime = DateFormat('HH-mm-ss').format(dateTime);
-                                     
+                                    DateTime dateTime = timestampValue.toDate();
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(dateTime);
+                                    String formattedTime =
+                                        DateFormat('HH-mm-ss').format(dateTime);
+
                                     return Card(
                                       elevation: 5,
                                       margin: const EdgeInsets.symmetric(
@@ -177,7 +177,8 @@ class _ViewdataState extends State<Viewdata> {
                                           maxLines: 1,
                                         ),
                                         subtitle: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Description: ${data['description']}',
@@ -195,9 +196,8 @@ class _ViewdataState extends State<Viewdata> {
                                                 fontSize: 16,
                                                 color: Colors.grey,
                                               ),
-                                         
                                             ),
-                                             Text(
+                                            Text(
                                               'Time:${formattedTime}',
                                               style: const TextStyle(
                                                 fontFamily: 'serif',
@@ -388,8 +388,7 @@ class _ViewdataState extends State<Viewdata> {
           border: InputBorder.none,
         ),
         onChanged: (value) {
-          setState(
-              () {}); 
+          setState(() {});
         },
       ),
       actions: [

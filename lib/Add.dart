@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_2/view_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ADDING extends StatefulWidget {
@@ -30,9 +31,14 @@ class _AddState extends State<ADDING> {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Note uploaded successfully'),
       ));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Viewdata()),
+      );
     } catch (e) {
       print('Error uploading data: $e');
     }
@@ -42,7 +48,7 @@ class _AddState extends State<ADDING> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('My Notepad',
+          title: const Text('My Notepad',
               style: TextStyle(
                 fontFamily: 'serif',
               )),
@@ -56,7 +62,7 @@ class _AddState extends State<ADDING> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Add New Data',
                     style: TextStyle(
                       fontFamily: 'serif',
@@ -65,10 +71,10 @@ class _AddState extends State<ADDING> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   TextField(
                     controller: _nameController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Name',
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue, width: 2.0),
@@ -78,41 +84,60 @@ class _AddState extends State<ADDING> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   TextFormField(
                     maxLines: 10,
                     controller: _descriptionController,
                     decoration: InputDecoration(
-                      labelStyle: TextStyle(
+                      labelStyle: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
-                      hintText: 'Enter a description...',
-                      border: OutlineInputBorder(),
-                      enabledBorder: OutlineInputBorder(
+                      hintText: 'Enter description...',
+                      border: const OutlineInputBorder(),
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                       ),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue, width: 2.0),
                       ),
-                      fillColor: Colors.grey[200], 
+                      fillColor: Colors.grey[200],
                       filled: true,
                     ),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                       color: Colors.black87,
                     ),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Column(
                         children: [
                           ElevatedButton(
-                            onPressed: _uploadData,
-                            child: Text(' Add Data ',
+                            onPressed: () {
+                              if (_nameController.text.trim().isEmpty &&
+                                  _nameController.text.trim() == '') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text('Note Name Is Empty'),
+                                ));
+                              }
+                              if (_descriptionController.text.trim().isEmpty &&
+                                  _descriptionController.text.trim() == '') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text('Note Description Is Empty'),
+                                ));
+                              }
+                              else{
+                                _uploadData();
+                              }
+                            
+                            },
+                            child: const Text(' Add Data ',
                                 style: TextStyle(
                                   fontFamily: 'serif',
                                 )),
@@ -129,7 +154,7 @@ class _AddState extends State<ADDING> {
                               _descriptionController.text = '';
                               _nameController.text = '';
                             },
-                            child: Text('Clear Data',
+                            child: const Text('Clear Data',
                                 style: TextStyle(
                                   fontFamily: 'serif',
                                 )),
@@ -145,7 +170,7 @@ class _AddState extends State<ADDING> {
                       )
                     ],
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                 ],
               ),
             ),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/view_users_screen.dart';
@@ -49,23 +51,90 @@ class _EditState extends State<Edit> {
       String updatedName = _nameController.text;
       String updatedDescription = _descriptionController.text;
 
-      await users.doc(widget.documentId).update({
-        'name': updatedName,
-        'description': updatedDescription,
-      });
+      if (widget.name.trim() == updatedName.trim() &&
+          widget.description.trim() == updatedDescription.trim()) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('No Change',
+                  style: TextStyle(
+                    fontFamily: 'serif',
+                  )),
+              content: const Text('Nothing Will Be Change To Update',
+                  style: TextStyle(
+                    fontFamily: 'serif',
+                  )),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'ok',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Update',
+                  style: TextStyle(
+                    fontFamily: 'serif',
+                  )),
+              content: const Text('Are you sure you want to Update This Note?',
+                  style: TextStyle(
+                    fontFamily: 'serif',
+                  )),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Cancel',
+                      style: TextStyle(
+                        fontFamily: 'serif',
+                      )),
+                ),
+                TextButton(
+                  onPressed: () {
+                    users.doc(widget.documentId).update({
+                      'name': updatedName,
+                      'description': updatedDescription,
+                    });
+                    Navigator.of(context).pop();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('User details updated successfully'),
-        ),
-      );
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('User details updated successfully'),
+                      ),
+                    );
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Viewdata(),
-        ),
-      );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Viewdata()),
+                    );
+                  },
+                  child: const Text(
+                    'Update',
+                    style: TextStyle(
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      }
     } catch (e) {
       print('Error updating user details: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -133,45 +202,7 @@ class _EditState extends State<Edit> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Update',
-                              style: TextStyle(
-                                fontFamily: 'serif',
-                              )),
-                          content: const Text(
-                              'Are you sure you want to Update This Note?',
-                              style: TextStyle(
-                                fontFamily: 'serif',
-                              )),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Cancel',
-                                  style: TextStyle(
-                                    fontFamily: 'serif',
-                                  )),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                _updateUserDetails();
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text(
-                                'Update',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    _updateUserDetails();
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blueAccent,
