@@ -11,7 +11,6 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions using MediaQuery
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -52,7 +51,6 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    // Use Flexible for TextField to allow it to take available space
                     FadeInUp(
                       duration: const Duration(seconds: 2),
                       child: Flexible(
@@ -66,7 +64,6 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.01),
-                    // Use Flexible for TextField to allow it to take available space
                     FadeInUp(
                       duration: const Duration(seconds: 2),
                       child: Flexible(
@@ -94,7 +91,6 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                    // Use Flexible for the button to allow it to take available space
                     FadeInUp(
                       duration: const Duration(seconds: 2),
                       child: Flexible(
@@ -158,7 +154,6 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.015),
-                    // Use Flexible for the GestureDetector to allow it to take available space
                     GestureDetector(
                       onTap: () {
                         Navigator.push(

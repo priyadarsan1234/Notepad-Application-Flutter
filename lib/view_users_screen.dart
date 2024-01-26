@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/EditScreen.dart';
 import 'package:flutter_application_2/Add.dart';
 import 'package:flutter_application_2/login_screen.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Viewdata extends StatefulWidget {
@@ -141,7 +142,12 @@ class _ViewdataState extends State<Viewdata> {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
                                     String documentId = document.id;
-
+                                    dynamic timestampValue = data['timestamp'];
+                                      DateTime dateTime = timestampValue.toDate();
+                                      DateTime dateOnly = DateTime(dateTime.year, dateTime.month, dateTime.day);
+                                      String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+                                      String formattedTime = DateFormat('HH-mm-ss').format(dateTime);
+                                     
                                     return Card(
                                       elevation: 5,
                                       margin: const EdgeInsets.symmetric(
@@ -170,14 +176,36 @@ class _ViewdataState extends State<Viewdata> {
                                           ),
                                           maxLines: 1,
                                         ),
-                                        subtitle: Text(
-                                          'Description: ${data['description']}',
-                                          style: const TextStyle(
-                                            fontFamily: 'serif',
-                                            fontSize: 16,
-                                            color: Colors.grey,
-                                          ),
-                                          maxLines: 1,
+                                        subtitle: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Description: ${data['description']}',
+                                              style: const TextStyle(
+                                                fontFamily: 'serif',
+                                                fontSize: 16,
+                                                color: Colors.grey,
+                                              ),
+                                              maxLines: 1,
+                                            ),
+                                            Text(
+                                              'Created: ${formattedDate}',
+                                              style: const TextStyle(
+                                                fontFamily: 'serif',
+                                                fontSize: 16,
+                                                color: Colors.grey,
+                                              ),
+                                         
+                                            ),
+                                             Text(
+                                              'Time:${formattedTime}',
+                                              style: const TextStyle(
+                                                fontFamily: 'serif',
+                                                fontSize: 16,
+                                                color: Colors.grey,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         onTap: () {
                                           Navigator.push(
@@ -361,7 +389,7 @@ class _ViewdataState extends State<Viewdata> {
         ),
         onChanged: (value) {
           setState(
-              () {}); // Trigger a rebuild when the user types in the search bar
+              () {}); 
         },
       ),
       actions: [

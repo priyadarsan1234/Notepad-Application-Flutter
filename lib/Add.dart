@@ -30,12 +30,10 @@ class _AddState extends State<ADDING> {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      // Show a success message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Data uploaded successfully'),
+        content: Text('Note uploaded successfully'),
       ));
     } catch (e) {
-      // Handle any errors that may occur during the process
       print('Error uploading data: $e');
     }
   }
@@ -98,7 +96,7 @@ class _AddState extends State<ADDING> {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue, width: 2.0),
                       ),
-                      fillColor: Colors.grey[200], // Background color
+                      fillColor: Colors.grey[200], 
                       filled: true,
                     ),
                     style: TextStyle(
@@ -153,6 +151,5 @@ class _AddState extends State<ADDING> {
             ),
           ),
         ));
-    // );
   }
 }

@@ -13,7 +13,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions using MediaQuery
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -29,7 +28,6 @@ class LoginScreen extends StatelessWidget {
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
-                // Adjust padding based on screen width
                 padding: EdgeInsets.all(screenWidth * 0.05),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           color: Colors.blueAccent,
                           fontFamily:
-                              'serif', // Replace 'Arial' with the font family you want to use
+                              'serif', 
                         ),
                       ),
                     ),
