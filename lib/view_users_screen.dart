@@ -35,7 +35,7 @@ class _ViewdataState extends State<Viewdata> {
     } catch (e) {
       print('Error getting email: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Error getting email. Please try again.'),
         ),
       );
@@ -68,7 +68,7 @@ class _ViewdataState extends State<Viewdata> {
         backgroundColor: Colors.blue,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               clearSharedPreferences();
             },
@@ -77,14 +77,13 @@ class _ViewdataState extends State<Viewdata> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top:8.0),
+          const Padding(
+            padding: EdgeInsets.only(top:8.0),
             child: Text(
-              "Click Card TO See More Or Update",
+              "ClickAbove To View Full Or Update Record",
               style: TextStyle(
                 fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
+                color: Colors.redAccent,
               ),
             ),
           ),
@@ -132,7 +131,7 @@ class _ViewdataState extends State<Viewdata> {
 
                                     return Card(
                                       elevation: 5,
-                                      margin: EdgeInsets.symmetric(
+                                      margin: const EdgeInsets.symmetric(
                                         horizontal: 10,
                                         vertical: 8,
                                       ),
@@ -140,14 +139,14 @@ class _ViewdataState extends State<Viewdata> {
                                         borderRadius: BorderRadius.circular(15.0),
                                       ),
                                       child: ListTile(
-                                        contentPadding: EdgeInsets.all(16),
+                                        contentPadding: const EdgeInsets.all(16),
                                         tileColor: Colors.white,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(15.0),
                                         ),
                                         title: Text(
                                           data['name'],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.blue,
@@ -156,7 +155,7 @@ class _ViewdataState extends State<Viewdata> {
                                         ),
                                         subtitle: Text(
                                           'Description: ${data['description']}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey,
                                           ),
@@ -175,22 +174,22 @@ class _ViewdataState extends State<Viewdata> {
                                           );
                                         },
                                         trailing: IconButton(
-                                          icon: Icon(Icons.delete),
+                                          icon: const Icon(Icons.delete),
                                           color: Colors.red,
                                           onPressed: () {
                                             showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title: Text('Delete User'),
-                                                  content: Text(
+                                                  title: const Text('Delete User'),
+                                                  content: const Text(
                                                       'Are you sure you want to delete this user?'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
                                                         Navigator.of(context).pop();
                                                       },
-                                                      child: Text('Cancel'),
+                                                      child: const Text('Cancel'),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
@@ -198,7 +197,7 @@ class _ViewdataState extends State<Viewdata> {
                                                             .then((value) {
                                                           ScaffoldMessenger.of(context)
                                                               .showSnackBar(
-                                                                SnackBar(
+                                                                const SnackBar(
                                                                   content: Text(
                                                                       'User deleted successfully'),
                                                                 ),
@@ -207,7 +206,7 @@ class _ViewdataState extends State<Viewdata> {
                                                         });
                                                         Navigator.of(context).pop();
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Delete',
                                                         style: TextStyle(
                                                           color: Colors.red,
@@ -241,6 +240,7 @@ class _ViewdataState extends State<Viewdata> {
             MaterialPageRoute(builder: (context) => ADDING()),
           );
         },
+        hoverColor: Colors.red,
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add),
       ),

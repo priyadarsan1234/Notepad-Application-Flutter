@@ -11,6 +11,10 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions using MediaQuery
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -21,52 +25,60 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          // Adjust padding based on screen width
+          padding: EdgeInsets.all(screenWidth * 0.05),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-             FadeInUp(
+              FadeInUp(
                 duration: const Duration(seconds: 2),
                 child: Image.asset(
                   'assets/logo.png',
-                  height: 100,
+                  height: screenHeight * 0.1,
                 ),
               ),
-              const SizedBox(height: 10),
-              FadeInUp(
-                    duration: const Duration(seconds: 2),
-                    child: const Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
-                      ),
-                    )),
-              const SizedBox(height: 10),
+              SizedBox(height: screenHeight * 0.02),
               FadeInUp(
                 duration: const Duration(seconds: 2),
-                child: TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    icon: Icon(Icons.email, color: Colors.blueAccent),
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.06,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
                   ),
                 ),
               ),
-              const SizedBox(height: 5),
+              SizedBox(height: screenHeight * 0.01),
+              // Use Flexible for TextField to allow it to take available space
               FadeInUp(
                 duration: const Duration(seconds: 2),
-                child: TextField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    icon: Icon(Icons.lock, color: Colors.blueAccent),
+                child: Flexible(
+                  child: TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      icon: Icon(Icons.email, color: Colors.blueAccent),
+                    ),
                   ),
-                  obscureText: true,
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: screenHeight * 0.01),
+              // Use Flexible for TextField to allow it to take available space
+              FadeInUp(
+                duration: const Duration(seconds: 2),
+                child: Flexible(
+                  child: TextField(
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      icon: Icon(Icons.lock, color: Colors.blueAccent),
+                    ),
+                    obscureText: true,
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.02),
               FadeInUp(
                 duration: const Duration(seconds: 2),
                 child: const Row(
@@ -76,76 +88,95 @@ class SignUpScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
-               FadeInUp(
-                            duration: const Duration(seconds: 2),
-                            child:  ElevatedButton(
-                onPressed: () async {
-                  String email = emailController.text.trim();
-                  String password = passwordController.text.trim();
+              SizedBox(height: screenHeight * 0.02),
+              // Use Flexible for the button to allow it to take available space
+              FadeInUp(
+                duration: const Duration(seconds: 2),
+                child: Flexible(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      String email = emailController.text.trim();
+                      String password = passwordController.text.trim();
 
-                  if(email.isEmpty && email==""){
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Email Empty'),
-                    ));
-                  } else if(password.isEmpty && password==""){
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Password Empty'),));
-                  }
-                  else{
-                    User? user =
-                      await _auth.signUpWithEmailAndPassword(email, password);
-                  if (user != null) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
-                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text('Signup successfully: ${user.uid}'),
-                    ));
-                    
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text('Sign Up Failed'),
-                    ));
-                  }
-                  }
-                },
-                child: const Text('Login'),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blueAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                      if (email.isEmpty && email == "") {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Email Empty'),
+                          ),
+                        );
+                      } else if (password.isEmpty && password == "") {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Password Empty'),
+                          ),
+                        );
+                      } else {
+                        User? user =
+                            await _auth.signUpWithEmailAndPassword(email, password);
+                        if (user != null) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Signup successfully: ${user.uid}'),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Sign Up Failed'),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    child:  const Text('SignUp'),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blueAccent,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.1,
+                        vertical: screenHeight * 0.02,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
                   ),
                 ),
-              ),),
-              const SizedBox(
-                height: 15,
               ),
+              SizedBox(height: screenHeight * 0.015),
+              // Use Flexible for the GestureDetector to allow it to take available space
               GestureDetector(
-                  onTap: () {
-                   Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LoginScreen()));
-                  },
-                  child:  FadeInUp(
-                            duration: const Duration(seconds: 2),
-                            child:  const Row(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                child: FadeInUp(
+                  duration: const Duration(seconds: 2),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Already have an account?'),
+                      const Text('Already have an account?'),
                       Text(
                         'Sign In',
                         style: TextStyle(
                           color: Colors.blueAccent,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
+                          fontSize: screenWidth * 0.04,
                         ),
                       ),
                     ],
-                  ),)),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
