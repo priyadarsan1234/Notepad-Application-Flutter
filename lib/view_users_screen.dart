@@ -87,6 +87,7 @@ class _ViewdataState extends State<Viewdata> {
             child: Text(
               "Click Above Card To View Full Or Update Record",
               style: TextStyle(
+                fontFamily: 'serif',
                 fontSize: 12,
                 color: Colors.redAccent,
               ),
@@ -162,6 +163,7 @@ class _ViewdataState extends State<Viewdata> {
                                         title: Text(
                                           data['name'],
                                           style: const TextStyle(
+                                            fontFamily: 'serif',
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.blue,
@@ -171,6 +173,7 @@ class _ViewdataState extends State<Viewdata> {
                                         subtitle: Text(
                                           'Description: ${data['description']}',
                                           style: const TextStyle(
+                                            fontFamily: 'serif',
                                             fontSize: 16,
                                             color: Colors.grey,
                                           ),
@@ -198,17 +201,27 @@ class _ViewdataState extends State<Viewdata> {
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
                                                   title:
-                                                      const Text('Delete Note'),
+                                                      const Text('Delete Note',
+                                                          style: TextStyle(
+                                                            fontFamily: 'serif',
+                                                          )),
                                                   content: const Text(
-                                                      'Are you sure you want to delete this Note?'),
+                                                    'Are you sure you want to delete this Note?',
+                                                    style: TextStyle(
+                                                      fontFamily: 'serif',
+                                                    ),
+                                                  ),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pop();
                                                       },
-                                                      child:
-                                                          const Text('Cancel'),
+                                                      child: const Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                            fontFamily: 'serif',
+                                                          )),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
@@ -270,7 +283,10 @@ class _ViewdataState extends State<Viewdata> {
 
   AppBar _buildNormalAppBar() {
     return AppBar(
-      title: const Text('My Notepad'),
+      title: const Text('My Notepad',
+          style: TextStyle(
+            fontFamily: 'serif',
+          )),
       backgroundColor: Colors.blue,
       actions: [
         IconButton(
@@ -290,19 +306,28 @@ class _ViewdataState extends State<Viewdata> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Logout'),
-                  content:
-                      const Text('Are you sure you want to Logout?'),
+                  title: const Text('Logout',
+                      style: TextStyle(
+                        fontFamily: 'serif',
+                      )),
+                  content: const Text('Are you sure you want to Logout?',
+                      style: TextStyle(
+                        fontFamily: 'serif',
+                      )),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text('Cancel'),
+                      child: const Text('Cancel',
+                          style: TextStyle(
+                            fontFamily: 'serif',
+                          )),
                     ),
                     TextButton(
                       onPressed: () {
                         clearSharedPreferences();
+                        Navigator.of(context).pop();
                       },
                       child: const Text(
                         'Logout',
@@ -320,6 +345,7 @@ class _ViewdataState extends State<Viewdata> {
       ],
     );
   }
+
   AppBar _buildSearchAppBar() {
     return AppBar(
       backgroundColor: Colors.blue,

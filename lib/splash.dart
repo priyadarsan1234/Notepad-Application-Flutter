@@ -34,9 +34,7 @@ class Splash_screenState extends State<Splash_screen> {
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  LoginScreen()), 
+          MaterialPageRoute(builder: (context) => LoginScreen()),
         );
       }
     });
@@ -51,36 +49,37 @@ class Splash_screenState extends State<Splash_screen> {
             color: Colors.black,
             width: constraints.maxWidth,
             height: constraints.maxHeight,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const SizedBox(height: 150),
-                  FadeInUp(
-                            duration: Duration(seconds: 2),
-                            child:  Image.asset(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // const SizedBox(height: 150),
+                FadeInDown(
+                  duration: Duration(seconds: 2),
+                  child: Image.asset(
                     'assets/logo.png',
                     height: 180,
-                  ),),
-                   SizedBox(height: 210),
-                   FadeInDownBig(
-                            duration: Duration(seconds: 2),
-                            child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        "Developed By Priyadarsan",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      Image.asset(
-                        "assets/logo.png",
-                        height: 30,
-                        width: 30,
-                      ),
-                    ],
-                  ),)
-                ],
-              ),
+                  ),
+                ),
+                // SizedBox(height: 210),
+                // FadeInDownBig(
+                //   duration: Duration(seconds: 2),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                    // children: [
+                    //   const Text(
+                    //     "Developed By Priyadarsan",
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   Image.asset(
+                    //     "assets/logo.png",
+                    //     height: 30,
+                    //     width: 30,
+                    //   ),
+                    // ],
+                //   ),
+                // )
+              ],
             ),
           );
         },

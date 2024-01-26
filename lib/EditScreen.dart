@@ -79,71 +79,116 @@ class _EditState extends State<Edit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Notepad'),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Name',
+        appBar: AppBar(
+          title: Text('My Notepad',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
-              ),
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: _nameController,
-              style: TextStyle(fontSize: 16),
-              decoration: InputDecoration(
-                labelText: 'Enter New Name',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Description',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
-              ),
-            ),
-            SizedBox(height: 8),
-            TextFormField(
-              maxLines: 10,
-              controller: _descriptionController,
-              style: TextStyle(fontSize: 16),
-              decoration: InputDecoration(
-                labelText: 'Enter New Description',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _updateUserDetails();
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blueAccent,
-                onPrimary: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 15),
-              ),
-              child: Text(
-                'Update',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-          ],
+                fontFamily: 'serif',
+              )),
+          backgroundColor: Colors.blueAccent,
         ),
-      ),
-      )
-    );
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    fontFamily: 'serif',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                SizedBox(height: 8),
+                TextField(
+                  controller: _nameController,
+                  style: TextStyle(fontSize: 16),
+                  decoration: InputDecoration(
+                    labelText: 'Enter New Name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Description',
+                  style: TextStyle(
+                    fontFamily: 'serif',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                SizedBox(height: 8),
+                TextFormField(
+                  maxLines: 10,
+                  controller: _descriptionController,
+                  style: TextStyle(fontSize: 16),
+                  decoration: InputDecoration(
+                    labelText: 'Enter New Description',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Update',
+                              style: TextStyle(
+                                fontFamily: 'serif',
+                              )),
+                          content: const Text(
+                              'Are you sure you want to Update This Note?',
+                              style: TextStyle(
+                                fontFamily: 'serif',
+                              )),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Cancel',
+                                  style: TextStyle(
+                                    fontFamily: 'serif',
+                                  )),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                _updateUserDetails();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text(
+                                'Update',
+                                style: TextStyle(
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blueAccent,
+                    onPrimary: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  child: Text(
+                    'Update',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'serif',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
