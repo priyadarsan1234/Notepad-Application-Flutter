@@ -320,7 +320,6 @@ class _ViewdataState extends State<Viewdata> {
       ],
     );
   }
-
   AppBar _buildSearchAppBar() {
     return AppBar(
       backgroundColor: Colors.blue,
