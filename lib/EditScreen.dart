@@ -1,6 +1,6 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/view_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Edit extends StatefulWidget {
@@ -57,6 +57,12 @@ class _EditState extends State<Edit> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('User details updated successfully'),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Viewdata(),
         ),
       );
     } catch (e) {
@@ -125,7 +131,7 @@ class _EditState extends State<Edit> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.blueAccent,
                 onPrimary: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
               ),
               child: Text(
                 'Update',
