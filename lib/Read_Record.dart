@@ -1,7 +1,5 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/All_Notes_Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Read_Note extends StatefulWidget {
@@ -45,8 +43,6 @@ class _EditState extends State<Read_Note> {
     super.dispose();
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +60,8 @@ class _EditState extends State<Read_Note> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 10),
-                 Text('${widget.Title}',
+                Text(
+                  '${widget.Title}',
                   style: TextStyle(
                     fontFamily: 'serif',
                     fontSize: 22,
@@ -73,15 +70,18 @@ class _EditState extends State<Read_Note> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Text('  *${widget.Content}*', style: TextStyle(
+                Text(
+                  '  *${widget.Content}*',
+                  style: TextStyle(
                     fontFamily: 'serif',
                     fontSize: 18,
-                  ),),
+                  ),
+                ),
                 const SizedBox(height: 20),
-                
               ],
             ),
           ),
-        ));
+        ),
+      );
+    }
   }
-}
