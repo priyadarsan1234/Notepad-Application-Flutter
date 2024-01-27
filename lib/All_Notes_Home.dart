@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/EditNote.dart';
 import 'package:flutter_application_2/Add_Note.dart';
+import 'package:flutter_application_2/Read_Record.dart';
 import 'package:flutter_application_2/login.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class All_Notes_Home extends StatefulWidget {
   @override
   _All_Notes_HomeState createState() => _All_Notes_HomeState();
@@ -68,6 +70,7 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
       isSearching = true;
     });
   }
+
   void _stopSearch() {
     setState(() {
       isSearching = false;
@@ -127,164 +130,7 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
                                   child: Text('Error: ${snapshot.error}'),
                                 );
                               } else {
-                                return ListView(
-                                  children:
-                                      snapshot.data!.docs.where((document) {
-                                    Map<String, dynamic> data =
-                                        document.data() as Map<String, dynamic>;
-                                    String Title = data['Title'].toLowerCase();
-                                    String query =
-                                        searchController.text.toLowerCase();
-                                    return Title.contains(query);
-                                  }).map((DocumentSnapshot document) {
-                                    Map<String, dynamic> data =
-                                        document.data() as Map<String, dynamic>;
-                                    String documentId = document.id;
-                                    dynamic timestampValue = data['timestamp'];
-                                    DateTime dateTime = timestampValue.toDate();
-                                    String formattedDate =
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(dateTime);
-                                    String formattedTime =
-                                        DateFormat('HH-mm-ss').format(dateTime);
-
-                                    return Card(
-                                      elevation: 5,
-                                      margin: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 8,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.all(16),
-                                        tileColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
-                                        ),
-                                        title: Text(
-                                          data['Title'],
-                                          style: const TextStyle(
-                                            fontFamily: 'serif',
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.blue,
-                                          ),
-                                          maxLines: 1,
-                                        ),
-                                        subtitle: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Content: ${data['Content']}',
-                                              style: const TextStyle(
-                                                fontFamily: 'serif',
-                                                fontSize: 16,
-                                                color: Colors.grey,
-                                              ),
-                                              maxLines: 1,
-                                            ),
-                                            Text(
-                                              'Created: ${formattedDate}',
-                                              style: const TextStyle(
-                                                fontFamily: 'serif',
-                                                fontSize: 16,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Time:${formattedTime}',
-                                              style: const TextStyle(
-                                                fontFamily: 'serif',
-                                                fontSize: 16,
-                                                color: Colors.grey,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Edit_Note(
-                                                Title: data['Title'],
-                                                Content:
-                                                    data['Content'],
-                                                documentId: documentId,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        trailing: IconButton(
-                                          icon: const Icon(Icons.delete),
-                                          color: Colors.red,
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title:
-                                                      const Text('Delete Note',
-                                                          style: TextStyle(
-                                                            fontFamily: 'serif',
-                                                          )),
-                                                  content: const Text(
-                                                    'Are you sure you want to delete this Note?',
-                                                    style: TextStyle(
-                                                      fontFamily: 'serif',
-                                                    ),
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: const Text(
-                                                          'Cancel',
-                                                          style: TextStyle(
-                                                            fontFamily: 'serif',
-                                                          )),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        _deleteUser(documentId)
-                                                            .then((value) {
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                            const SnackBar(
-                                                              content: Text(
-                                                                  'User deleted successfully'),
-                                                            ),
-                                                          );
-                                                          setState(() {});
-                                                        });
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: const Text(
-                                                        'Delete',
-                                                        style: TextStyle(
-                                                          color: Colors.red,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                );
+                                return _buildNoteList(snapshot);
                               }
                             },
                           ),
@@ -307,6 +153,176 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Widget _buildNoteList(AsyncSnapshot<QuerySnapshot> snapshot) {
+    var filteredNotes = snapshot.data!.docs.where((document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      String Title = data['Title'].toLowerCase();
+      String query = searchController.text.toLowerCase();
+      return Title.contains(query);
+    }).toList();
+
+    return filteredNotes.isNotEmpty
+        ? ListView.builder(
+            itemCount: filteredNotes.length,
+            itemBuilder: (BuildContext context, int index) {
+              Map<String, dynamic> data =
+                  filteredNotes[index].data() as Map<String, dynamic>;
+              String documentId = filteredNotes[index].id;
+              dynamic timestampValue = data['timestamp'];
+              DateTime dateTime = timestampValue.toDate();
+              String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+              String formattedTime = DateFormat('HH-mm-ss').format(dateTime);
+
+              return Card(
+                elevation: 5,
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
+                
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(16),
+                  tileColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  onLongPress: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Read_Note(
+                          Title: data['Title'],
+                          Content: data['Content'],
+                          documentId: documentId,
+                        ),
+                      ),
+                    );
+                  },
+                  title: Text(
+                    data['Title'],
+                    style: const TextStyle(
+                      fontFamily: 'serif',
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
+                    maxLines: 1,
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Content: ${data['Content']}',
+                        style: const TextStyle(
+                          fontFamily: 'serif',
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                        maxLines: 1,
+                      ),
+                      Text(
+                        'Created: ${formattedDate}',
+                        style: const TextStyle(
+                          fontFamily: 'serif',
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        'Time:${formattedTime}',
+                        style: const TextStyle(
+                          fontFamily: 'serif',
+                          fontSize: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Edit_Note(
+                          Title: data['Title'],
+                          Content: data['Content'],
+                          documentId: documentId,
+                        ),
+                      ),
+                    );
+                  },
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: Colors.red,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('Delete Note',
+                                style: TextStyle(
+                                  fontFamily: 'serif',
+                                )),
+                            content: const Text(
+                              'Are you sure you want to delete this Note?',
+                              style: TextStyle(
+                                fontFamily: 'serif',
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancel',
+                                    style: TextStyle(
+                                      fontFamily: 'serif',
+                                    )),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  _deleteUser(documentId).then((value) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content:
+                                            Text('User deleted successfully'),
+                                      ),
+                                    );
+                                    setState(() {});
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'Delete',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          )
+        : Center(
+            child: Text(
+              'No notes found.',
+              style: TextStyle(
+                fontFamily: 'serif',
+                fontSize: 18,
+                color: Colors.grey,
+              ),
+            ),
+          );
   }
 
   AppBar _buildNormalAppBar() {
