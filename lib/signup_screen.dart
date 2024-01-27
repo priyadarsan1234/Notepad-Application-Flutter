@@ -53,8 +53,7 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.01),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: Flexible(
-                        child: TextField(
+                      child: TextField(
                           controller: emailController,
                           decoration: const InputDecoration(
                             labelText: 'Email',
@@ -62,12 +61,10 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
                     SizedBox(height: screenHeight * 0.01),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: Flexible(
-                        child: TextField(
+                      child:  TextField(
                           controller: passwordController,
                           decoration: const InputDecoration(
                             labelText: 'Password',
@@ -76,7 +73,6 @@ class SignUpScreen extends StatelessWidget {
                           obscureText: true,
                         ),
                       ),
-                    ),
                     SizedBox(height: screenHeight * 0.02),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
@@ -93,8 +89,7 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: Flexible(
-                        child: ElevatedButton(
+                      child: ElevatedButton(
                           onPressed: () async {
                             String email = emailController.text.trim();
                             String password = passwordController.text.trim();
@@ -152,7 +147,6 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
                     SizedBox(height: screenHeight * 0.015),
                     GestureDetector(
                       onTap: () {

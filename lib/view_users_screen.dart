@@ -84,7 +84,7 @@ class _ViewdataState extends State<Viewdata> {
           const Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: Text(
-              "Click Above Card To View Full Or Update Record",
+              "Click Above Card To View Full Or Update Note",
               style: TextStyle(
                 fontFamily: 'serif',
                 fontSize: 12,
@@ -132,10 +132,10 @@ class _ViewdataState extends State<Viewdata> {
                                       snapshot.data!.docs.where((document) {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
-                                    String name = data['name'].toLowerCase();
+                                    String Title = data['Title'].toLowerCase();
                                     String query =
                                         searchController.text.toLowerCase();
-                                    return name.contains(query);
+                                    return Title.contains(query);
                                   }).map((DocumentSnapshot document) {
                                     Map<String, dynamic> data =
                                         document.data() as Map<String, dynamic>;
@@ -167,7 +167,7 @@ class _ViewdataState extends State<Viewdata> {
                                               BorderRadius.circular(15.0),
                                         ),
                                         title: Text(
-                                          data['name'],
+                                          data['Title'],
                                           style: const TextStyle(
                                             fontFamily: 'serif',
                                             fontSize: 20,
@@ -181,7 +181,7 @@ class _ViewdataState extends State<Viewdata> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              'Description: ${data['description']}',
+                                              'Content: ${data['Content']}',
                                               style: const TextStyle(
                                                 fontFamily: 'serif',
                                                 fontSize: 16,
@@ -212,9 +212,9 @@ class _ViewdataState extends State<Viewdata> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) => Edit(
-                                                name: data['name'],
-                                                description:
-                                                    data['description'],
+                                                Title: data['Title'],
+                                                Content:
+                                                    data['Content'],
                                                 documentId: documentId,
                                               ),
                                             ),
@@ -384,7 +384,7 @@ class _ViewdataState extends State<Viewdata> {
       title: TextField(
         controller: searchController,
         decoration: InputDecoration(
-          hintText: 'Search by Name',
+          hintText: 'Search by Title',
           border: InputBorder.none,
         ),
         onChanged: (value) {

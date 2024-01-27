@@ -6,13 +6,13 @@ import 'package:flutter_application_2/view_users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Edit extends StatefulWidget {
-  final String name;
-  final String description;
+  final String Title;
+  final String Content;
   final String documentId;
 
   Edit({
-    required this.name,
-    required this.description,
+    required this.Title,
+    required this.Content,
     required this.documentId,
   });
 
@@ -21,15 +21,15 @@ class Edit extends StatefulWidget {
 }
 
 class _EditState extends State<Edit> {
-  late TextEditingController _nameController;
-  late TextEditingController _descriptionController;
+  late TextEditingController _TitleController;
+  late TextEditingController _ContentController;
   late CollectionReference users;
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.name);
-    _descriptionController = TextEditingController(text: widget.description);
+    _TitleController = TextEditingController(text: widget.Title);
+    _ContentController = TextEditingController(text: widget.Content);
     _initializeUsersCollection();
   }
 
@@ -41,18 +41,18 @@ class _EditState extends State<Edit> {
 
   @override
   void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
+    _TitleController.dispose();
+    _ContentController.dispose();
     super.dispose();
   }
 
   void _updateUserDetails() async {
     try {
-      String updatedName = _nameController.text;
-      String updatedDescription = _descriptionController.text;
+      String updatedTitle = _TitleController.text;
+      String updatedContent = _ContentController.text;
 
-      if (widget.name.trim() == updatedName.trim() &&
-          widget.description.trim() == updatedDescription.trim()) {
+      if (widget.Title.trim() == updatedTitle.trim() &&
+          widget.Content.trim() == updatedContent.trim()) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -107,8 +107,8 @@ class _EditState extends State<Edit> {
                 TextButton(
                   onPressed: () {
                     users.doc(widget.documentId).update({
-                      'name': updatedName,
-                      'description': updatedDescription,
+                      'name': updatedTitle,
+                      'description': updatedContent,
                     });
                     Navigator.of(context).pop();
 
@@ -172,7 +172,7 @@ class _EditState extends State<Edit> {
                 ),
                 SizedBox(height: 8),
                 TextField(
-                  controller: _nameController,
+                  controller: _TitleController,
                   style: TextStyle(fontSize: 16),
                   decoration: InputDecoration(
                     labelText: 'Enter New Name',
@@ -192,7 +192,7 @@ class _EditState extends State<Edit> {
                 SizedBox(height: 8),
                 TextFormField(
                   maxLines: 10,
-                  controller: _descriptionController,
+                  controller: _ContentController,
                   style: TextStyle(fontSize: 16),
                   decoration: InputDecoration(
                     labelText: 'Enter New Description',

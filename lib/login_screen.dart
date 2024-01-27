@@ -58,21 +58,19 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.01),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: Flexible(
-                        child: TextField(
+                      child:  TextField(
                           controller: emailController,
                           decoration: const InputDecoration(
                             labelText: 'Email',
                             icon: Icon(Icons.email, color: Colors.blueAccent),
                           ),
                         ),
-                      ),
+                      
                     ),
                     SizedBox(height: screenHeight * 0.01),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: Flexible(
-                        child: TextField(
+                      child: TextField(
                           controller: passwordController,
                           decoration: const InputDecoration(
                             labelText: 'Password',
@@ -80,7 +78,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                           obscureText: true,
                         ),
-                      ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
                     FadeInUp(
@@ -98,8 +95,7 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: Flexible(
-                        child: ElevatedButton(
+                      child:  ElevatedButton(
                           onPressed: () async {
                             String email = emailController.text.trim();
                             String password = passwordController.text.trim();
@@ -154,7 +150,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
                     SizedBox(height: screenHeight * 0.01),
                     GestureDetector(
                       onTap: () {

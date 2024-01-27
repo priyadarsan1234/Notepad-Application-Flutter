@@ -9,8 +9,8 @@ class ADDING extends StatefulWidget {
 }
 
 class _AddState extends State<ADDING> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _TitleController = TextEditingController();
+  final TextEditingController _ContentController = TextEditingController();
 
   Future<void> _uploadData() async {
     try {
@@ -21,13 +21,12 @@ class _AddState extends State<ADDING> {
 
       CollectionReference users = firestore.collection('users${mail}');
 
-      String name = _nameController.text;
-      String description = _descriptionController.text;
+      String name = _TitleController.text;
+      String description = _ContentController.text;
 
       await users.add({
-        'name': name,
-        'description': description,
-        'email': mail,
+        'Title': name,
+        'Content': description,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
@@ -63,7 +62,7 @@ class _AddState extends State<ADDING> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Add New Data',
+                    'Create New Note',
                     style: TextStyle(
                       fontFamily: 'serif',
                       color: Colors.blue,
@@ -73,9 +72,9 @@ class _AddState extends State<ADDING> {
                   ),
                   const SizedBox(height: 16.0),
                   TextField(
-                    controller: _nameController,
+                    controller: _TitleController,
                     decoration: const InputDecoration(
-                      labelText: 'Name',
+                      labelText: 'Enter Title',
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.blue, width: 2.0),
                       ),
@@ -87,14 +86,14 @@ class _AddState extends State<ADDING> {
                   const SizedBox(height: 16.0),
                   TextFormField(
                     maxLines: 10,
-                    controller: _descriptionController,
+                    controller: _ContentController,
                     decoration: InputDecoration(
                       labelStyle: const TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.blue,
                       ),
-                      hintText: 'Enter description...',
+                      hintText: 'Enter Content...',
                       border: const OutlineInputBorder(),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
@@ -118,18 +117,18 @@ class _AddState extends State<ADDING> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              if (_nameController.text.trim().isEmpty &&
-                                  _nameController.text.trim() == '') {
+                              if (_TitleController.text.trim().isEmpty &&
+                                  _TitleController.text.trim() == '') {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
-                                  content: Text('Note Name Is Empty'),
+                                  content: Text('Note Title Is Empty'),
                                 ));
                               }
-                              if (_descriptionController.text.trim().isEmpty &&
-                                  _descriptionController.text.trim() == '') {
+                              if (_ContentController.text.trim().isEmpty &&
+                                  _ContentController.text.trim() == '') {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
-                                  content: Text('Note Description Is Empty'),
+                                  content: Text('Note Content Is Empty'),
                                 ));
                               }
                               else{
@@ -137,7 +136,7 @@ class _AddState extends State<ADDING> {
                               }
                             
                             },
-                            child: const Text(' Add Data ',
+                            child: const Text(' Create  ',
                                 style: TextStyle(
                                   fontFamily: 'serif',
                                 )),
@@ -151,8 +150,8 @@ class _AddState extends State<ADDING> {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              _descriptionController.text = '';
-                              _nameController.text = '';
+                              _TitleController.text = '';
+                              _ContentController.text = '';
                             },
                             child: const Text('Clear Data',
                                 style: TextStyle(
