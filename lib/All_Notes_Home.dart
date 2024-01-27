@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_2/EditScreen.dart';
+import 'package:flutter_application_2/EditNote.dart';
 import 'package:flutter_application_2/Add.dart';
-import 'package:flutter_application_2/login_screen.dart';
+import 'package:flutter_application_2/login.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class Viewdata extends StatefulWidget {

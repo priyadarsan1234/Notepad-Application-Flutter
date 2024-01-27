@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/login_screen.dart';
-import 'package:flutter_application_2/view_users_screen.dart';
+import 'package:flutter_application_2/login.dart';
+import 'package:flutter_application_2/All_Notes_Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash_screen extends StatefulWidget {

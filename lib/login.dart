@@ -1,10 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/login_screen.dart';
+import 'package:flutter_application_2/signup.dart';
+import 'package:flutter_application_2/All_Notes_Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_service.dart';
 
-class SignUpScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService _auth = AuthService();
@@ -20,7 +22,7 @@ class SignUpScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Color(0xFF64B5F6), Colors.white],
+              colors: [Color.fromARGB(255, 105, 149, 224), Colors.white,Color.fromARGB(255, 105, 149, 224)],
             ),
           ),
           child: Center(
@@ -37,34 +39,38 @@ class SignUpScreen extends StatelessWidget {
                         height: screenHeight * 0.13,
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.02),
-                    FadeInUp(
+                    SizedBox(height: screenHeight * 0.06),
+                    
+                        FadeInUp(
                       duration: const Duration(seconds: 2),
                       child: Text(
-                        'Sign Up',
+                        "Welcome Back",
                         style: TextStyle(
-                          fontFamily: 'serif',
-                          fontSize: screenWidth * 0.06,
+                          fontSize: screenWidth * 0.07,
                           fontWeight: FontWeight.bold,
-                          color: Colors.red,
+                          color: Colors.blueAccent,
+                          fontFamily:
+                              'serif', 
                         ),
                       ),
                     ),
+                     
                     SizedBox(height: screenHeight * 0.01),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: TextField(
+                      child:  TextField(
                           controller: emailController,
                           decoration: const InputDecoration(
                             labelText: 'Email',
                             icon: Icon(Icons.email, color: Colors.blueAccent),
                           ),
                         ),
-                      ),
+                      
+                    ),
                     SizedBox(height: screenHeight * 0.01),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child:  TextField(
+                      child: TextField(
                           controller: passwordController,
                           decoration: const InputDecoration(
                             labelText: 'Password',
@@ -72,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                           obscureText: true,
                         ),
-                      ),
+                    ),
                     SizedBox(height: screenHeight * 0.02),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
@@ -89,72 +95,68 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
                     FadeInUp(
                       duration: const Duration(seconds: 2),
-                      child: ElevatedButton(
+                      child:  ElevatedButton(
                           onPressed: () async {
                             String email = emailController.text.trim();
                             String password = passwordController.text.trim();
-
                             if (email.isEmpty && email == "") {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Email Empty'),
-                                ),
-                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Email Empty'),
+                              ));
                             } else if (password.isEmpty && password == "") {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Password Empty'),
-                                ),
-                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content: Text('Password Empty'),
+                              ));
                             } else {
                               User? user = await _auth
-                                  .signUpWithEmailAndPassword(email, password);
+                                  .signInWithEmailAndPassword(email, password);
                               if (user != null) {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setBool('isLoggedIn', true);
+                                prefs.setString('email', email);
+                                prefs.setString('password', password);
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text('Login Successfully'),
+                                ));
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                        'Signup successfully: ${user.uid}'),
-                                  ),
+                                      builder: (context) => Viewdata()),
                                 );
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Sign Up Failed'),
-                                  ),
-                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text('Login Failed'),
+                                ));
                               }
                             }
                           },
-                          child: const Text('SignUp',
+                          child: const Text('Login',
                               style: TextStyle(
                                 fontFamily: 'serif',
                               )),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent,
                             padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.1,
-                              vertical: screenHeight * 0.02,
-                            ),
+                                horizontal: screenWidth * 0.1,
+                                vertical: screenHeight * 0.02),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         ),
                       ),
-                    SizedBox(height: screenHeight * 0.015),
+                    SizedBox(height: screenHeight * 0.01),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
+                              builder: (context) => SignUpScreen()),
                         );
                       },
                       child: FadeInUp(
@@ -162,18 +164,17 @@ class SignUpScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Already have an account?',
+                            const Text('Don\'t have an account?',
                                 style: TextStyle(
                                   fontFamily: 'serif',
                                 )),
                             Text(
-                              'Sign In',
+                              'Sign Up',
                               style: TextStyle(
-                                fontFamily: 'serif',
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: screenWidth * 0.05,
-                              ),
+                                  fontFamily: 'serif',
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: screenWidth * 0.05),
                             ),
                           ],
                         ),
