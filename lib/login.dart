@@ -6,7 +6,7 @@ import 'package:flutter_application_2/All_Notes_Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'auth_service.dart';
 
-class LoginScreen extends StatelessWidget {
+class Login extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService _auth = AuthService();
@@ -125,7 +125,7 @@ class LoginScreen extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Viewdata()),
+                                      builder: (context) => All_Notes_Home()),
                                 );
                               } else {
                                 ScaffoldMessenger.of(context)
@@ -156,7 +156,7 @@ class LoginScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpScreen()),
+                              builder: (context) => SignUp()),
                         );
                       },
                       child: FadeInUp(

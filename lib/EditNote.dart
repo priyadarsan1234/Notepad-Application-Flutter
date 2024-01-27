@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/All_Notes_Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Edit extends StatefulWidget {
+class Edit_Note extends StatefulWidget {
   final String Title;
   final String Content;
   final String documentId;
 
-  Edit({
+  Edit_Note({
     required this.Title,
     required this.Content,
     required this.documentId,
@@ -20,7 +20,7 @@ class Edit extends StatefulWidget {
   _EditState createState() => _EditState();
 }
 
-class _EditState extends State<Edit> {
+class _EditState extends State<Edit_Note> {
   late TextEditingController _TitleController;
   late TextEditingController _ContentController;
   late CollectionReference users;
@@ -107,20 +107,20 @@ class _EditState extends State<Edit> {
                 TextButton(
                   onPressed: () {
                     users.doc(widget.documentId).update({
-                      'name': updatedTitle,
-                      'description': updatedContent,
+                      'Title': updatedTitle,
+                      'Content': updatedContent,
                     });
                     Navigator.of(context).pop();
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('User details updated successfully'),
                       ),
                     );
 
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Viewdata()),
+                      MaterialPageRoute(builder: (context) => All_Notes_Home()),
                     );
                   },
                   child: const Text(
@@ -138,7 +138,7 @@ class _EditState extends State<Edit> {
     } catch (e) {
       print('Error updating user details: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Error updating user details. Please try again.'),
         ),
       );
@@ -149,7 +149,7 @@ class _EditState extends State<Edit> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('My Notepad',
+          title: const Text('My Notepad',
               style: TextStyle(
                 fontFamily: 'serif',
               )),
@@ -161,8 +161,8 @@ class _EditState extends State<Edit> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  'Name',
+                const Text(
+                  'Title',
                   style: TextStyle(
                     fontFamily: 'serif',
                     fontSize: 18,
@@ -170,18 +170,18 @@ class _EditState extends State<Edit> {
                     color: Colors.blueAccent,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextField(
                   controller: _TitleController,
-                  style: TextStyle(fontSize: 16),
-                  decoration: InputDecoration(
-                    labelText: 'Enter New Name',
+                  style: const TextStyle(fontSize: 16),
+                  decoration: const InputDecoration(
+                    labelText: 'Enter New Title',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(height: 16),
-                Text(
-                  'Description',
+                const SizedBox(height: 16),
+                const Text(
+                  'Content',
                   style: TextStyle(
                     fontFamily: 'serif',
                     fontSize: 18,
@@ -189,17 +189,17 @@ class _EditState extends State<Edit> {
                     color: Colors.blueAccent,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 TextFormField(
                   maxLines: 10,
                   controller: _ContentController,
-                  style: TextStyle(fontSize: 16),
-                  decoration: InputDecoration(
-                    labelText: 'Enter New Description',
+                  style: const TextStyle(fontSize: 16),
+                  decoration: const InputDecoration(
+                    labelText: 'Enter New Content',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     _updateUserDetails();
@@ -207,9 +207,9 @@ class _EditState extends State<Edit> {
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blueAccent,
                     onPrimary: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 15),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  child: Text(
+                  child: const Text(
                     'Update',
                     style: TextStyle(
                       fontSize: 18,

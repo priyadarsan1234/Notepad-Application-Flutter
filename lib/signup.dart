@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/login.dart';
 import 'auth_service.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUp extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService _auth = AuthService();
@@ -113,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
+                                    builder: (context) => Login(),
                                   ),
                                 );
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -153,7 +153,7 @@ class SignUpScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (context) => Login(),
                           ),
                         );
                       },

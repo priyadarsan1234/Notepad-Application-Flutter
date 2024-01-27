@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/All_Notes_Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ADDING extends StatefulWidget {
+class ADD_Note extends StatefulWidget {
   @override
   _AddState createState() => _AddState();
 }
 
-class _AddState extends State<ADDING> {
+class _AddState extends State<ADD_Note> {
   final TextEditingController _TitleController = TextEditingController();
   final TextEditingController _ContentController = TextEditingController();
 
@@ -21,12 +21,12 @@ class _AddState extends State<ADDING> {
 
       CollectionReference users = firestore.collection('users${mail}');
 
-      String name = _TitleController.text;
-      String description = _ContentController.text;
+      String Title = _TitleController.text;
+      String Content = _ContentController.text;
 
       await users.add({
-        'Title': name,
-        'Content': description,
+        'Title': Title,
+        'Content': Content,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
@@ -36,7 +36,7 @@ class _AddState extends State<ADDING> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Viewdata()),
+        MaterialPageRoute(builder: (context) => All_Notes_Home()),
       );
     } catch (e) {
       print('Error uploading data: $e');

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_2/EditNote.dart';
-import 'package:flutter_application_2/Add.dart';
+import 'package:flutter_application_2/Add_Note.dart';
 import 'package:flutter_application_2/login.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class Viewdata extends StatefulWidget {
+class All_Notes_Home extends StatefulWidget {
   @override
-  _ViewdataState createState() => _ViewdataState();
+  _All_Notes_HomeState createState() => _All_Notes_HomeState();
 }
 
-class _ViewdataState extends State<Viewdata> {
+class _All_Notes_HomeState extends State<All_Notes_Home> {
   late Future<String?> email;
   late CollectionReference? users;
   TextEditingController searchController = TextEditingController();
@@ -58,7 +58,7 @@ class _ViewdataState extends State<Viewdata> {
 
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
+      MaterialPageRoute(builder: (context) => Login()),
       (Route<dynamic> route) => false,
     );
   }
@@ -211,7 +211,7 @@ class _ViewdataState extends State<Viewdata> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => Edit(
+                                              builder: (context) => Edit_Note(
                                                 Title: data['Title'],
                                                 Content:
                                                     data['Content'],
@@ -299,7 +299,7 @@ class _ViewdataState extends State<Viewdata> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ADDING()),
+            MaterialPageRoute(builder: (context) => ADD_Note()),
           );
         },
         hoverColor: Colors.red,

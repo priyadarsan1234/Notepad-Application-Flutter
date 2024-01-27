@@ -26,15 +26,15 @@ class Splash_screenState extends State<Splash_screen> {
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => Login()),
       );
       if (isLoggedIn) {
         Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Viewdata()));
+            context, MaterialPageRoute(builder: (context) => All_Notes_Home()));
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => LoginScreen()),
+          MaterialPageRoute(builder: (context) => Login()),
         );
       }
     });
