@@ -87,7 +87,7 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
           const Padding(
             padding: EdgeInsets.only(top: 8.0),
             child: Text(
-              "Click Above Card To View Full Or Update Note",
+              " Press Above Card To Update Note \nLongPress On Card To Read Record",
               style: TextStyle(
                 fontFamily: 'serif',
                 fontSize: 12,
@@ -234,7 +234,7 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
                         ),
                       ),
                       Text(
-                        'Time:${formattedTime}',
+                        'Time: ${formattedTime}',
                         style: const TextStyle(
                           fontFamily: 'serif',
                           fontSize: 16,
