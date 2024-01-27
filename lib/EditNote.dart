@@ -114,7 +114,7 @@ class _EditState extends State<Edit_Note> {
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('User details updated successfully'),
+                        content: Text('Note updated successfully'),
                       ),
                     );
 
@@ -136,10 +136,10 @@ class _EditState extends State<Edit_Note> {
         );
       }
     } catch (e) {
-      print('Error updating user details: $e');
+      print('Error updating Note: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Error updating user details. Please try again.'),
+          content: Text('Error updating Note. Please try again.'),
         ),
       );
     }

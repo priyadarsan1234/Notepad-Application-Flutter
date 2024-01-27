@@ -31,7 +31,7 @@ class _AddState extends State<ADD_Note> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Note uploaded successfully'),
+        content: Text('Note Created successfully'),
       ));
 
       Navigator.pushReplacement(
