@@ -33,7 +33,7 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
         return null;
       }
       setState(() {
-        users = FirebaseFirestore.instance.collection('users${mail ?? ""}');
+        users = FirebaseFirestore.instance.collection('users${mail}');
       });
       return mail;
     } catch (e) {
