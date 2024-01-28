@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/All_Notes_Home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Edit_Note extends StatefulWidget {
