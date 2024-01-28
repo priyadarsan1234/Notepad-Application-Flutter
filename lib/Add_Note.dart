@@ -34,10 +34,7 @@ class _AddState extends State<ADD_Note> {
         content: Text('Note Created successfully'),
       ));
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => All_Notes_Home()),
-      );
+      
     } catch (e) {
       print('Error uploading data: $e');
     }
@@ -45,7 +42,12 @@ class _AddState extends State<ADD_Note> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+    onWillPop: () async {
+      Navigator.pop(context, true);
+      return false;
+    },
+    child: Scaffold(
         appBar: AppBar(
           title: const Text('My Notepad',
               style: TextStyle(
@@ -133,6 +135,9 @@ class _AddState extends State<ADD_Note> {
                               }
                               else{
                                 _uploadData();
+
+                                _TitleController.text='';
+                                _ContentController.text='';
                               }
                             
                             },
@@ -174,6 +179,8 @@ class _AddState extends State<ADD_Note> {
               ),
             ),
           ),
-        ));
+        )
+    ),
+        );
   }
 }

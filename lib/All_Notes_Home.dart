@@ -71,6 +71,10 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
     });
   }
 
+  void refreshCurrentPage() {
+    setState(() {});
+  }
+
   void _stopSearch() {
     setState(() {
       isSearching = false;
@@ -144,9 +148,12 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ADD_Note()),
-          );
+                  context, MaterialPageRoute(builder: (context) => ADD_Note()))
+              .then((result) {
+            if (result == true) {
+              refreshCurrentPage();
+            }
+          });
         },
         hoverColor: Colors.red,
         backgroundColor: Colors.blueAccent,
@@ -181,7 +188,6 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
                   horizontal: 10,
                   vertical: 8,
                 ),
-                
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -191,7 +197,7 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  onLongPress: (){
+                  onLongPress: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -253,7 +259,11 @@ class _All_Notes_HomeState extends State<All_Notes_Home> {
                           documentId: documentId,
                         ),
                       ),
-                    );
+                    ).then((result) {
+                      if (result == true) {
+                        refreshCurrentPage();
+                      }
+                    });
                   },
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),

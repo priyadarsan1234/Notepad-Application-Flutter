@@ -115,11 +115,6 @@ class _EditState extends State<Edit_Note> {
                         content: Text('Note updated successfully'),
                       ),
                     );
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => All_Notes_Home()),
-                    );
                   },
                   child: const Text(
                     'Update',
@@ -145,7 +140,13 @@ class _EditState extends State<Edit_Note> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+    onWillPop: () async {
+      // Handle back button press here
+      Navigator.pop(context, true);
+      return false; // Return true to allow the page to be popped
+    },
+    child: Scaffold(
       appBar: AppBar(
         title: const Text('My Notepad',
             style: TextStyle(
@@ -219,6 +220,7 @@ class _EditState extends State<Edit_Note> {
           ),
         ),
       ),
+    ),
     );
   }
 }
