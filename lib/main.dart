@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/Data_Add.dart';
 import 'package:flutter_application_2/splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -34,7 +35,7 @@ class MyHomePage extends StatelessWidget {
         builder: (context, constraints) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            home: const Splash_screen(),
+            home: Splash_screen(),
             themeMode: ThemeMode.light,
             theme: ThemeData(
                 primaryColor: const Color.fromARGB(255, 0, 127, 139),
