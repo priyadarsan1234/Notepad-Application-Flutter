@@ -89,7 +89,7 @@ class _SignUpState extends State<SignUp> with AutomaticKeepAliveClientMixin {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text("Password Contain ( A, a, 1, @ )",
+                        Text("Password Contain (A, a, 1, @)",
                             style: TextStyle(
                               fontFamily: 'serif',
                             )),
